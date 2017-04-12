@@ -7,7 +7,41 @@ function SLNode(val){
     this.val = val;
     this.next = null;
 }
+
 //all SLL functions:
+SLL.prototype.secondMax = function(){
+    if(this.length() < 2){console.log("The list must contain more than 1 value."); return null}
+    var max = this.head.val;
+    var secondMax;
+    var runner = this.head.next;
+    while(runner){
+        if(runner.val > max){
+            secondMax = max;
+            max = runner.val;
+        }
+        else if(!secondMax || secondMax < runner.val){
+            secondMax = runner.val;
+        }
+        runner = runner.next;
+    }
+    console.log("Second maximum: " + secondMax);
+    return secondMax;
+}
+SLL.prototype.kToLast = function(k){
+    if(this.length() < k+1){console.log("value at k to last does not exist.");return null}
+    var runner = this.head;
+    var krunner = this.head;
+    //runner is k places ahead of krunner after loop:
+    for(var i = 0; i < k; i++){runner = runner.next}
+    while(runner.next){
+        runner = runner.next;
+        krunner = krunner.next;
+    }
+    //after while loop, runner is the last node on the SLL. krunner is still
+    //k nodes behind runner, so it is now on the node k nodes from the last node.
+    console.log("k to last value: " + krunner.val);
+    return krunner.val;
+}
 SLL.prototype.addFront = function(...vals){
     var start = vals.length-1;
     if(!this.head){this.head = new SLNode(vals[start]);start--}
@@ -98,4 +132,4 @@ SLL.prototype.reverse = function(){
 
 var myList = new SLL();
 myList.addFront(1,2,3,4,5).display()
-myList.reverse().display();
+myList.reverse().display().secondMax()
