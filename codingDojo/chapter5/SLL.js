@@ -9,6 +9,17 @@ function SLNode(val){
 }
 
 //all SLL functions:
+
+SLL.prototype.removeBack = function(){
+    if(!this.head){console.log("Empty list"); return null}
+    if(!this.head.next){this.head = null; return this}
+    var runner = this.head;
+    while(runner.next.next){
+        runner = runner.next;
+    }
+    runner.next = null;
+    return this;
+}
 SLL.prototype.back = function(){
     if(!this.head){console.log("Empty list"); return null}
     var runner = this.head;
@@ -143,3 +154,4 @@ var myList = new SLL();
 myList.addFront(1,2,3,4,5).display()
 myList.reverse().display().secondMax()
 myList.back();
+myList.display().removeBack().display().removeBack().removeBack().removeBack().removeBack().display()
