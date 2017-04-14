@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>test</title>
+        <script type="text/javascript">
+            function SLL(){
+                this.head = null;
+            }
+            function SLNode(val){
+                this.val = val;
+                this.next = null;
+            }
+            SLL.prototype.display = function(){
+                if(!this.head){console.log("Empty list");return this}
+                runner = this.head;
+                var string = "Head -> ";
+                while(runner){
+                    string+="["+runner.val+"]";
+                    if(runner.next){string+=" -> "}
+                    runner = runner.next;
+                }
+                console.log(string);
+                return this;
+            }
+            function createSList(prompt){
+                var newList = new SLL();
+                var promptInput = prompt("Enter values to create a list")
+                var runner;
+                while(promptInput){
+                    if(!newList.head){newList.head = new SLNode(promptInput);runner = newList.head}
+                    else{runner.next = new SLNode(promptInput);runner = runner.next}
+                    promptInput = prompt("Enter values to create a list")
+                }
+                return newList
+            }
+            createSList(prompt).display()
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

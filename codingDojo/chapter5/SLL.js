@@ -7,8 +7,98 @@ function SLNode(val){
     this.val = val;
     this.next = null;
 }
+//SLNode functions:
+SLNode.prototype.display = function(){
+    runner = this;
+    var string = ""
+    while(runner){
+        string+="["+runner.val+"]";
+        if(runner.next){string+=" -> "}
+        runner = runner.next;
+    }
+    console.log(string);
+    return this;
+}
+//SLL functions:
 
-//all SLL functions:
+SLL.prototype.removeNegatives = function(){
+    if(!this.head){console.log("Empty list");return null}
+    while(this.head.val < 0){this.head = this.head.next}
+    var runner = this.head;
+    while(runner.next){
+        if(runner.next.val < 0){runner.next = runner.next.next;}
+        else{runner = runner.next}
+    }
+    return this;
+}
+SLL.prototype.splitOnValue = function(val){
+    if(!this.head){console.log("Empty list");return null}
+    if(this.head.val === val){var temp = this.head; this.head = null; return temp;}
+    var runner = this.head;
+    while(runner.next){
+        if(runner.next.val === val){
+            var temp = runner.next
+            runner.next = null;
+            return temp;
+        }
+        runner = runner.next;
+    }
+    console.log("value not found")
+    return null
+}
+SLL.prototype.removeVal = function(val){
+    if(!this.head){console.log("Empty list");return this}
+    if(this.head.val === val){this.head = this.head.next; return this;}
+    var runner = this.head;
+    while(runner.next){
+        if(runner.next.val === val){
+            runner.next = runner.next.next;
+            console.log("Successfully removed")
+            return this;
+        }
+    }
+    console.log("Value not found");
+    return this;
+}
+SLL.prototype.appendVal = function(val,after){
+    if(!this.head){
+        this.head = new SLNode(val);
+        return this;
+    }
+    var runner = this.head;
+    while(runner.next){
+        if(runner.val === after){
+            var temp = runner.next;
+            runner.next = new SLNode(val);
+            runner.next.next = temp;
+            return this;
+        }
+        runner = runner.next
+    }
+    runner.next = new SLNode(val);
+    return this;
+}
+SLL.prototype.prependVal = function(val,before){
+    if(!this.head || this.head.val === before){
+        if(this.head){var temp = this.head}
+        this.head = new SLNode(val);
+        if(temp){this.head.next = temp;}
+        return this;
+    }
+    var prevRunner;
+    var runner = this.head;
+    while(runner.next){
+        if(runner.next.val === before){
+            var temp = runner.next;
+            runner.next = new SLNode(val);
+            runner.next.next = temp;
+            return this;
+        }
+        runner = runner.next;
+    }
+    runner.next = new SLNode(val);
+    return this;
+}
 SLL.prototype.moveMaxToBack = function(){
     if(!this.head){console.log("Empty list");return this}
     if(!this.head.next){console.log("Only one node present in list");return this}
@@ -128,7 +218,7 @@ SLL.prototype.addFront = function(...vals){
     return this;
 }
 SLL.prototype.removeFront = function(){
-    if(!this.head){console.log("Nothing to remove");return null}
+    if(!this.head){console.log("Empty list");return null}
     this.head = this.head.next;
     return this
 }
@@ -183,12 +273,12 @@ SLL.prototype.average = function(){
     return sum/this.length()
 }
 SLL.prototype.display = function(){
-    if(!this.head){console.log("There is nothing here");return this}
+    if(!this.head){console.log("Head -> [null]");return this}
     runner = this.head;
-    var string = "";
+    var string = "Head -> ";
     while(runner){
-        string+=runner.val;
-        if(runner.next){string+=", "}
+        string+="["+runner.val+"]";
+        if(runner.next){string+=" -> "}
         runner = runner.next;
     }
     console.log(string);
@@ -206,4 +296,5 @@ SLL.prototype.reverse = function(){
 }
 
 var myList = new SLL();
-myList.addFront(13,5,3,7,2,9,10,1,28,4,6).display().moveMinToFront().display().moveMaxToBack().display()
+myList.addFront(13,5,3,7,2,9,10,1,28,4,6).display().removeNegatives().display()
+myList.addBack(-1,-5,-12,-48,5,-82,58).addFront(-2,0,47,-48,-57,7,-39).display().removeNegatives().display()
