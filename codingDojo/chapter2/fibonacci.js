@@ -22,4 +22,4 @@ function fibonacci(index){
     }
     return fib1;
 }
-console.log(fibonacci(7))
+console.log(fibonacci(5))

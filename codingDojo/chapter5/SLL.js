@@ -9,14 +9,68 @@ function SLNode(val){
 }
 
 //all SLL functions:
-
+SLL.prototype.moveMaxToBack = function(){
+    if(!this.head){console.log("Empty list");return this}
+    if(!this.head.next){console.log("Only one node present in list");return this}
+    var nodeBeforeMax;
+    var maxNode = this.head;
+    var runner = this.head;
+    while(runner.next){
+        if(runner.next.val > maxNode.val){
+            maxNode = runner.next;
+            nodeBeforeMax = runner;
+        }
+        runner = runner.next;
+    }
+    if(maxNode.next){
+        runner.next = maxNode;
+        nodeBeforeMax.next = maxNode.next;
+        maxNode.next = null
+    }
+    return this;
+}
+SLL.prototype.moveMinToFront = function(){
+    if(!this.head){console.log("Empty list");return this}
+    if(!this.head.next){console.log("Only one node present in list");return this}
+    var nodeBeforeMin;
+    var minNode = this.head;
+    var runner = this.head;
+    while(runner.next){
+        if(runner.next.val < minNode.val){
+            minNode = runner.next;
+            nodeBeforeMin = runner;
+        }
+        runner = runner.next;
+    }
+    if(nodeBeforeMin){
+        var temp = nodeBeforeMin.next;
+        nodeBeforeMin.next = nodeBeforeMin.next.next;
+        temp.next = this.head;
+        this.head = temp;
+    }
+    return this;
+}
+SLL.prototype.addBack = function(...vals){
+    if(vals.length < 1){console.log("Must provide values to add.");return this;}
+    var start = 0;
+    if(!this.head){this.head = new SLNode(vals[start]);start++}
+    var runner = this.head;
+    while(runner.next){runner=runner.next}
+    while(vals[start]){
+        runner.next = new SLNode(vals[start]);
+        runner = runner.next;
+        start++;
+    }
+    return this;
+}
 SLL.prototype.removeBack = function(){
     if(!this.head){console.log("Empty list"); return null}
-    if(!this.head.next){this.head = null; return this}
+    if(!this.head.next){console.log("Removed value: "+this.head.val);this.head = null;return this}
     var runner = this.head;
     while(runner.next.next){
         runner = runner.next;
     }
+    console.log("Removed value: "+runner.next.val);
     runner.next = null;
     return this;
 }
@@ -63,6 +117,7 @@ SLL.prototype.kToLast = function(k){
     return krunner.val;
 }
 SLL.prototype.addFront = function(...vals){
+    if(vals.length < 1){console.log("Must provide values to add.");return this;}
     var start = vals.length-1;
     if(!this.head){this.head = new SLNode(vals[start]);start--}
     for(var i = start; i >= 0; i--){
@@ -151,7 +206,4 @@ SLL.prototype.reverse = function(){
 }
 
 var myList = new SLL();
-myList.addFront(1,2,3,4,5).display()
-myList.reverse().display().secondMax()
-myList.back();
-myList.display().removeBack().display().removeBack().removeBack().removeBack().removeBack().display()
+myList.addFront(13,5,3,7,2,9,10,1,28,4,6).display().moveMinToFront().display().moveMaxToBack().display()
