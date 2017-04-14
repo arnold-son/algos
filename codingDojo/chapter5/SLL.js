@@ -9,6 +9,15 @@ function SLNode(val){
 }
 
 //all SLL functions:
+SLL.prototype.back = function(){
+    if(!this.head){console.log("Empty list"); return null}
+    var runner = this.head;
+    while(runner.next){
+        runner = runner.next;
+    }
+    console.log("The last value is: " + runner.val);
+    return runner.val;
+}
 SLL.prototype.secondMax = function(){
     if(this.length() < 2){console.log("The list must contain more than 1 value."); return null}
     var max = this.head.val;
@@ -133,3 +142,4 @@ SLL.prototype.reverse = function(){
 var myList = new SLL();
 myList.addFront(1,2,3,4,5).display()
 myList.reverse().display().secondMax()
+myList.back();
