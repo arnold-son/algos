@@ -28,6 +28,23 @@ SLL.prototype.secondLargest = function(){
     return secondMax;
 }
 
+SLL.prototype.dedupe = function(){
+    if(!this.head){console.log("empty list"); return this}
+    var map = {};
+    map[this.head.val] = true;
+    var runner = this.head;
+    while(runner.next != null){
+        if(!map[runner.next.val]){
+            map[runner.next.val] = true;
+            runnerPrev = runner;
+            runner = runner.next;
+        } else {
+            runner.next = runner.next.next;
+        }
+    }
+    return this;
+}
+
 var myList = new SLL();
-myList.addFront(1,2,4,2,56,8,2,783,123,5,2,5,234,21,31,23,12,312312312).display();
-myList.secondLargest();
+myList.addFront(1,2,1,1,2,2,2,1,1,1,1).display();
+myList.dedupe().display();
