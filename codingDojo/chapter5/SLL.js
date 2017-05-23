@@ -10,41 +10,28 @@ function SLNode(val){
 
 require("./completeSLLfunctions.js")(SLL, SLNode)
 
-SLL.prototype.secondLargest = function(){
-    if(!this.head){console.log("empty list"); return this}
-    var max = this.head.val;
-    var secondMax;
-    var runner = this.head.next;
-    while(runner){
-        if(runner.val > max){
-            secondMax = max;
-            max = runner.val;
-        } else if(!secondMax || runner.val > secondMax){
-            secondMax = runner.val;
-        }
-        runner = runner.next;
+SLL.prototype.zip = function(secondList){
+    if(!this.head || !secondList.head){console.log("One or more lists are empty."); return this}
+    var zippedList = new SLL();
+    zippedList.head = Object.assign({}, this.head);
+    var runner1 = secondList.head;
+    var runner2 = this.head.next;
+    var zippedRunner = zippedList.head;
+    while(runner1){
+        zippedRunner.next = Object.assign({}, runner1);
+        zippedRunner = zippedRunner.next;
+        var temp = runner1;
+        runner1 = runner2;
+        runner2 = temp;
+        runner2 = runner2.next;
     }
-    console.log("The second-largest value is: " + secondMax)
-    return secondMax;
-}
-
-SLL.prototype.dedupe = function(){
-    if(!this.head){console.log("empty list"); return this}
-    var map = {};
-    map[this.head.val] = true;
-    var runner = this.head;
-    while(runner.next != null){
-        if(!map[runner.next.val]){
-            map[runner.next.val] = true;
-            runnerPrev = runner;
-            runner = runner.next;
-        } else {
-            runner.next = runner.next.next;
-        }
-    }
-    return this;
+    return zippedList;
 }
 
 var myList = new SLL();
-myList.addFront(1,2,1,1,2,2,2,1,1,1,1).display();
-myList.dedupe().display();
+var myList2 = new SLL();
+myList.addFront(1,1,1,1,1).display()
+myList2.addFront(2,2,2,2,2).display()
+myList.zip(myList2).display()
+myList.display()
+myList2.display()
