@@ -119,11 +119,28 @@ function SLQueue () {
         console.log("The last minimum value " + min + " was removed.")
         return this;
     }
+    this.interleaveQueue = function(){
+        if(this.size() < 3){console.log("Must contain at least 3 elements to interleave.");return this}
+        var runner = head;
+        var runner2 = head;
+        var secondHalf = Math.ceil(this.size()/2);
+        for(var i = 1; i <= secondHalf; i++){
+            if(secondHalf % 2 > 0 && i === secondHalf){tail = runner2}
+            runner2 = runner2.next;
+        }
+        while(runner2){
+            var temp = runner.next;
+            runner.next = runner2;
+            runner2 = runner2.next;
+            runner.next.next = temp;
+            runner = temp;
+        }
+        tail.next = null;
+        return this;
+    }
 }
 
 var queue = new SLQueue();
 var queue2 = new SLQueue();
-queue.enqueue(1).enqueue(1).enqueue(2).enqueue(3).enqueue(4).enqueue(5).display();
-queue2.enqueue(10).enqueue(8).enqueue(1).enqueue(2).enqueue(3).enqueue(1).enqueue(1).enqueue(1).enqueue(4).enqueue(5).enqueue(6).display();
-queue.removeLastMin().display().removeLastMin().display()
-queue2.removeMins().display()
+queue.enqueue(1).enqueue(2).enqueue(3).enqueue(4).enqueue(5).display();
+queue.interleaveQueue().display()
