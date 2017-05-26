@@ -46,11 +46,7 @@ function SLQueue () {
         return false;
     }
     this.isEmpty = function(){
-        if(!head){
-            return true
-        } else{
-            return false;
-        }
+        return head === null;
     }
     this.size = function(){
         if(!head){return 0}
@@ -139,7 +135,25 @@ function SLQueue () {
         return this;
     }
 }
-
+function compareQueues(queue1,queue2){
+    if(!queue1.front() && !queue2.front()){
+        return true;
+    } else if(!queue1.front() || !queue2.front()){
+        return false;
+    }
+    var runner1 = queue1.front();
+    var runner2 = queue2.front();
+    while(runner1 || runner2){
+        if(!runner1 || !runner2){
+            return false;
+        } else if(runner1.val !== runner2.val){
+            return false;
+        }
+        runner1 = runner1.next;
+        runner2 = runner2.next;
+    }
+    return true;
+}
 var queue = new SLQueue();
 var queue2 = new SLQueue();
 queue.enqueue(1).enqueue(2).enqueue(3).enqueue(4).enqueue(5).display();
