@@ -135,6 +135,13 @@ function compareStacks(stack1,stack2){
 
     return stacksAreEqual;
 }
+
+function twoStacksOneQueue(stack1,stack2){
+    //juggle nodes between stacks
+    //to be coded later
+}
+
+
 var one = new SLStack().push(1).push(2).push(3).display();
 var copy = one.copy().display();
 one.display();
