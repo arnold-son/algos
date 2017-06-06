@@ -6,7 +6,7 @@
 //you should return "Anna".
 //Remember, do not linearly iterate the array!
 
-
+//Current solution does not work with duplicate values.
 function minOfSortedRotated(arr){
     if(arr[0] <= arr[arr.length-1]){
         return arr[0]
