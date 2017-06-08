@@ -2,19 +2,19 @@
 //that returns sum of integers from 1 to num. Recall iSigma(1) = 1,
 //iSigma(2) = 3, iSigma(3) = 6, iSigma(4) = 10.
 
-function iSigma(num){
-    if(iSigma.cache[num] !== undefined){
-        return iSigma.cache[num];
-    }
-    var sum = iSigma.cache[iSigma.cache["max"]]
-    for(var i = iSigma.cache["max"]+1; i <= num; i++){
-        sum += i;
-        iSigma.cache[i] = sum;
-    }
-    iSigma.cache["max"] = num;
-    return sum
-}
-iSigma.cache = {"0":0,"max":0};
+// function iSigma(num){
+//     if(iSigma.cache[num] !== undefined){
+//         return iSigma.cache[num];
+//     }
+//     var sum = iSigma.cache[iSigma.cache["max"]]
+//     for(var i = iSigma.cache["max"]+1; i <= num; i++){
+//         sum += i;
+//         iSigma.cache[i] = sum;
+//     }
+//     iSigma.cache["max"] = num;
+//     return sum
+// }
+// iSigma.cache = {"0":0,"max":0};
 
 function iSigmaNocache(num){
     sum = 0;
