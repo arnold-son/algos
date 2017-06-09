@@ -3,14 +3,12 @@
 //return the missing value. Given ([3,0,1]), return 2.
 
 function missingValue(arr){
-    var sigma = 0;
-    for(var i = 1; i <= arr.length; i++){
-        sigma += i;
-    }
+    var expectedSum = (0 + arr.length) * (arr.length + 1) /2;
+    var sum = 0;
     for(var elm of arr){
-        sigma -= elm;
+        sum += elm;
     }
-    return sigma;
+    return expectedSum - sum;
 }
 
 console.log(missingValue([3,0,1]))
