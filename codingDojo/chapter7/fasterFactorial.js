@@ -11,7 +11,7 @@ function fasterFactorial(num){
         fac*=i;
         fasterFactorial.cache[i] = fac;
     }
-    fasterFactorial["max"] = num;
+    fasterFactorial.cache["max"] = num;
     return fac;
 }
 fasterFactorial.cache = {"0":1,"1":1,"2":2,"3":6,"max":3}
