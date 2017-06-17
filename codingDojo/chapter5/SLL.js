@@ -28,10 +28,22 @@ SLL.prototype.zip = function(secondList){
     return zippedList;
 }
 
+function rListLength(node,length)
+{
+    if(length === undefined) {
+        length = 1;
+    } else {
+        length++;
+    }
+    if(node.next !== null) {
+        return rListLength(node.next,length)
+    } else {
+        return length;
+    }
+}
+
 var myList = new SLL();
 var myList2 = new SLL();
-myList.addFront(1,1,1,1,1).display()
-myList2.addFront(2,2,2,2,2).display()
-myList.zip(myList2).display()
-myList.display()
-myList2.display()
+myList.addFront(1,2,3,4,5,6,7,8,9,10);
+console.log(myList.head)
+console.log(rListLength(myList.head))
