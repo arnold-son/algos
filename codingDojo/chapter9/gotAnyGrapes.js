@@ -6,8 +6,17 @@
 //representing number of grapes in each adjacent baggy. Your function should
 //return the maximum amount of grapes he can obtain.
 
-function gotAnyGrapes(arr){
-    
-}
+console.log(gotAnyGrapes([1,2,3,9,5]))
 
-//will add later
+function gotAnyGrapes(arr){
+    function maxGrapesFromZeroToIndex(arr,i){
+        if(i === 0){
+            return arr[0];
+        }
+        if(i === 1){
+            return arr[1] > arr[0] ? arr[1] : arr[0];
+        }
+        return (arr[i] + maxGrapesFromZeroToIndex(arr,i-2)) > maxGrapesFromZeroToIndex(arr,i-1) ? arr[i] + maxGrapesFromZeroToIndex(arr,i-2) : maxGrapesFromZeroToIndex(arr,i-1);
+    }
+    return maxGrapesFromZeroToIndex(arr,arr.length-1)
+}
