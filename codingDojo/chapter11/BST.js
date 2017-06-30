@@ -12,6 +12,18 @@ function BTNode(value){
     this.left = null;
     this.right = null;
     this.parent = null;
+    this.leftsideBinaryTree = function(arr,level){
+        console.log(this.val)
+        if(!arr){arr = [] }
+        if(!level){level = 1}
+        if(level > arr.length){
+            arr.push(this.val)
+        }
+        // if(!this.left && !this.right){ return }
+        if(this.left){this.left.leftsideBinaryTree(arr,level+1)}
+        if(this.right){this.right.leftsideBinaryTree(arr,level+1)}
+        return arr;
+    }
     this.containsSum = function(num,sum){
         if(!sum){sum = 0}
         sum += this.val;
@@ -153,13 +165,13 @@ function BTNode(value){
         var right = this.right === null ? [] : this.right.BST2ArrPre();
         return currentAndLeft.concat(right);
     }
-    this.leftsideBinaryTree = function(){
-        if(this.left || this.right){
-            return this.left === null ? [this.val].concat(this.right.leftsideBinaryTree()) : [this.val].concat(this.left.leftsideBinaryTree())
-        } else {
-            return [this.val]
-        }
-    }
+    // this.leftsideBinaryTree = function(){
+    //     if(this.left || this.right){
+    //         return this.left === null ? [this.val].concat(this.right.leftsideBinaryTree()) : [this.val].concat(this.left.leftsideBinaryTree())
+    //     } else {
+    //         return [this.val]
+    //     }
+    // }
     this.BST2ArrPost = function(){
         var left = this.left === null ? [] : this.left.BST2ArrPost();
         var rightAndCurrent = this.right === null ? [this.val] : this.right.BST2ArrPost().concat([this.val]);
