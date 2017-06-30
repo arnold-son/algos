@@ -12,6 +12,72 @@ function BTNode(value){
     this.left = null;
     this.right = null;
     this.parent = null;
+    this.containsSum = function(num,sum){
+        if(!sum){sum = 0}
+        sum += this.val;
+        console.log(this.val,sum)
+        if(!this.left && !this.right){
+            return sum === num;
+        } else if(!this.right){
+            if(sum === num){
+                return true
+            } else {
+                return this.left.containsSum(num,sum)
+            }
+        } else if(!this.left){
+            if(sum === num){
+                return true
+            } else {
+                return this.right.containsSum(num,sum);
+            }
+        } else {
+            return this.left.containsSum(num,sum) || this.right.containsSum(num,sum);
+        }
+    }
+    this.closestValue = function(val){
+        if(this.val === val){
+            return val;
+        }
+        if(this.val > val){
+            if(!this.left){
+                return this.val;
+            } else {
+                var leftClosest = this.left.closestValue(val);
+                return this.val - val < Math.abs(leftClosest - val) ? this.val : leftClosest;
+            }
+        } else if(this.val < val){
+            if(!this.right){
+                return this.val;
+            } else {
+                var rightClosest = this.right.closestValue(val);
+                return val - this.val < Math.abs(val - rightClosest) ? this.val : rightClosest;
+            }
+        }
+    }
+    this.nodeBefore = function(){
+        if(this.left){
+            var runner = this.left;
+            while(runner.right){
+                runner = runner.right;
+            }
+            return runner;
+        } else if(this.parent){
+            return this.parent.val < this.val ? this.parent : null;
+        }
+        return null;
+    }
+    this.nodeAfter = function(){
+        if(this.right){
+            var runner = this.right;
+            while(runner.left){
+                runner = runner.left;
+            }
+            return runner;
+        } else if(this.parent){
+            return this.parent.val > this.val ? this.parent : null;
+        }
+        return null;
+    }
     this.isValid = function(min,max){
         if(min){
             if(this.val <= min){
@@ -86,6 +152,13 @@ function BTNode(value){
         var currentAndLeft = this.left === null ? [this.val] : [this.val].concat(this.left.BST2ArrPre());
         var right = this.right === null ? [] : this.right.BST2ArrPre();
         return currentAndLeft.concat(right);
+    }
+    this.leftsideBinaryTree = function(){
+        if(this.left || this.right){
+            return this.left === null ? [this.val].concat(this.right.leftsideBinaryTree()) : [this.val].concat(this.left.leftsideBinaryTree())
+        } else {
+            return [this.val]
+        }
     }
     this.BST2ArrPost = function(){
         var left = this.left === null ? [] : this.left.BST2ArrPost();
@@ -205,6 +278,62 @@ function BTNode(value){
 }
 function BST(){
     this.root = null;
+    this.leftsideBinaryTree = function(){
+        if(this.root === null){
+            return []
+        }
+        return this.root.leftsideBinaryTree();
+    }
+    this.containsSum = function(num){
+        if(this.root === null){
+            return false;
+        }
+        return this.root.containsSum(num)
+    }
+    this.closestValue = function(val){
+        if(this.root === null){
+            return null;
+        }
+        return this.root.closestValue(val)
+    }
+    this.valBefore = function(val){
+        if(this.root === null){
+            return false;
+        } else {
+            var closest;
+            var runner = this.root;
+            while(runner){
+                if(runner.val < val){
+                    if(!closest || runner.val > closest){
+                        closest = runner.val;
+                    }
+                    runner = runner.right;
+                } else {
+                    runner = runner.left;
+                }
+            }
+            return closest ? closest : false;
+        }
+    }
+    this.valAfter = function(val){
+        if(this.root === null){
+            return false;
+        } else {
+            var closest;
+            var runner = this.root;
+            while(runner){
+                if(runner.val > val){
+                    if(!closest || runner.val < closest){
+                        closest = runner.val;
+                    }
+                    runner = runner.left;
+                } else {
+                    runner = runner.right;
+                }
+            }
+            return closest ? closest : false;
+        }
+    }
     this.removeAll = function(){
         this.root = null;
     }
@@ -351,5 +480,5 @@ function arrToBST(arr){
 
 var myTree = new BST();
 var arrBST = arrToBST([1,2,3,4,5,6,7])
-console.log(arrBST.remove(8))
-console.log(arrBST.BSTtoArray())
+myTree.add(5).add(2).add(21).add(19).add(25)
+console.log(myTree.leftsideBinaryTree())
