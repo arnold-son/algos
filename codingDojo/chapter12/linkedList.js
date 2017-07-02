@@ -4,6 +4,17 @@ module.exports = {
         { return new SLNode(val) }
         this.val = val;
         this.next = null;
+        this.print = function(){
+            var str = "";
+            var runner = this;
+            while(runner){
+                str = str + "[" + runner.val + "] -> "
+                runner = runner.next;
+            }
+            str += "[null]"
+            console.log(str);
+            return this;
+        }
     },
 
     SLL: function SLL(){
@@ -12,6 +23,29 @@ module.exports = {
             { return new SLNode(val) }
             this.val = val;
             this.next = null;
+            this.print = function(){
+                var str = "";
+                var runner = this;
+                while(runner){
+                    str = str + "[" + runner.val + "] -> "
+                    runner = runner.next;
+                }
+                str += "[null]"
+                console.log(str);
+                return this;
+            }
+            this.size = function(){
+                var count = 0;
+                var runner = this;
+                while(runner){
+                    count++;
+                    runner = runner.next;
+                }
+                return count;
+            }
+            this.half = function(){
+                
+            }
         }
         if(!(this instanceof SLL))
         { return new SLL() }
