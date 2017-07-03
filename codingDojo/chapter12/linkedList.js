@@ -44,7 +44,25 @@ module.exports = {
                 return count;
             }
             this.half = function(){
-                
+                var halfRunner = null;
+                var runner = this;
+                var update = false;
+                while(runner){
+                    if(update === false){
+                        update = true;
+                    } else {
+                        update = false;
+                        if(halfRunner === null){
+                            halfRunner = this;
+                        } else {
+                            halfRunner = halfRunner.next;
+                        }
+                    }
+                    runner = runner.next;
+                }
+                var half = halfRunner.next;
+                halfRunner.next = null;
+                return half;
             }
         }
         if(!(this instanceof SLL))
