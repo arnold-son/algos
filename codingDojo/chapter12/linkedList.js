@@ -68,6 +68,16 @@ module.exports = {
         if(!(this instanceof SLL))
         { return new SLL() }
         this.head = null;
+        this.prepend = function(val){
+            if(!this.head){
+                this.head = new SLNode(val);
+            } else {
+                var newNode = new SLNode(val);
+                newNode.next = this.head;
+                this.head = newNode;
+            }
+            return this;
+        }
         this.swapHead = function(prevNode){
             var temp = prevNode.next;
             prevNode.next = prevNode.next.next;
