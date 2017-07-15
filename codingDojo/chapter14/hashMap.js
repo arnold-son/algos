@@ -18,6 +18,36 @@ function HashMap(capacity){
     this.capacity = capacity;
     this.table = [];
     this.count = 0;
+    this.grow = function(){
+        
+    }
+    this.loadFactor = function(){
+        return this.count/this.capacity;
+    }
+    this.remove = function(key){
+        var hash = key.hashCode();
+        var modHash = mod(hash,this.capacity)
+        if(!this.table[modHash] || this.table[modHash].head === null){
+            return null;
+        } else {
+            if(this.table[modHash].head.val[0] === hash){
+                var toRemove = this.table[modHash].head.val[1];
+                this.table[modHash].head = this.table[modHash].head.next;
+                return toRemove;
+            } else {
+                var runner = this.table[modHash].head;
+                while(runner.next){
+                    if(runner.next.val[0] === hash){
+                        var toRemove = runner.next.val[1];
+                        runner.next = runner.next.next;
+                        return toRemove;
+                    }
+                }
+                return null;
+            }
+        }
+        return this;
+    }
     this.add = function(key, val){
         this.count++;
         var hash = key.hashCode();
@@ -52,4 +82,6 @@ function HashMap(capacity){
 
 var myHash = new HashMap(100);
 myHash.add("Darren", "Darren is great!")
+console.log(myHash.findKey("Darren"))
+console.log(myHash.remove("Darren"))
 console.log(myHash.findKey("Darren"))
