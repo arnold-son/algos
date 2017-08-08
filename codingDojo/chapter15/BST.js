@@ -12,6 +12,38 @@ function BTNode(value){
     this.left = null;
     this.right = null;
     this.parent = null;
+    this.xthNodeAtLevelY = function(x,y){
+        if(y === 0){
+            if(x === 1){
+                return this;
+            } else {
+                return null;
+            }
+        }
+        if(y === 1){
+            if(x === 1){
+                return this.left;
+            } else if(x === 2){
+                return this.right;
+            } else {
+                return null;
+            }
+        }
+        var halfWidth = Math.pow(2,y-1);
+        if(x > halfWidth){
+            if(this.right === null){
+                return null;
+            } else {
+                return this.right.xthNodeAtLevelY(x - halfWidth,y-1);
+            }
+        } else {
+            if(this.left === null){
+                return null;
+            } else {
+                return this.left.xthNodeAtLevelY(x,y-1);
+            }
+        }
+    }
     this.leftsideBinaryTree = function(arr,level){
         console.log(this.val)
         if(!arr){arr = [] }
@@ -288,8 +320,37 @@ function BTNode(value){
         return this.height() - this.minHeight() <= 1;
     }
 }
+
+//******************************************************************************
+
 function BST(){
     this.root = null;
+    this.isComplete = function(){
+        var maxHeight = this.height();
+        var firstNodeCheck = this.xthNodeAtLevelY(1,maxHeight-1) === null ? false:true;
+        if(firstNodeCheck === true){
+            var prevNodeCheck = firstNodeCheck;
+            for (var node = 2; node <= Math.pow(2,maxHeight-1); node++) {
+                var nodeCheck = this.xthNodeAtLevelY(node,maxHeight-1) === null ? false:true;
+                if(prevNodeCheck === false && nodeCheck === true){
+                    return false;
+                }
+                prevNodeCheck = nodeCheck;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    this.isFull = function(){
+        return this.height() === this.minHeight();
+    }
+    this.xthNodeAtLevelY = function(x,y){
+        if(this.root === null){
+            return null;
+        }
+        return this.root.xthNodeAtLevelY(x,y);
+    }
     this.leftsideBinaryTree = function(){
         if(this.root === null){
             return []
@@ -489,3 +550,6 @@ function arrToBST(arr){
     newTree.root = arrToBSTNodes(arr);
     return newTree;
 }
+
+var myTree = arrToBST([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+console.log(myTree.isComplete())
