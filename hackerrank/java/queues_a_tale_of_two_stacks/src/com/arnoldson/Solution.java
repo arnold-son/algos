@@ -11,25 +11,25 @@ public class Solution {
         Stack<T> stackNewestOnTop = new Stack<T>();
         Stack<T> stackOldestOnTop = new Stack<T>();
 
+        void prepOutput() {
+            if (stackOldestOnTop.empty()) {
+                while (!stackNewestOnTop.empty()) {
+                    stackOldestOnTop.push(stackNewestOnTop.pop());
+                }
+            }
+        }
+
         public void enqueue(T value) { // Push onto newest stack
             stackNewestOnTop.push(value);
         }
 
         public T peek() {
-            if (stackOldestOnTop.empty()) {
-                while (!stackNewestOnTop.empty()) {
-                    stackOldestOnTop.push(stackNewestOnTop.pop());
-                }
-            }
+            prepOutput();
             return stackOldestOnTop.peek();
         }
 
         public T dequeue() {
-            if (stackOldestOnTop.empty()) {
-                while (!stackNewestOnTop.empty()) {
-                    stackOldestOnTop.push(stackNewestOnTop.pop());
-                }
-            }
+            prepOutput();
             return stackOldestOnTop.pop();
         }
     }
