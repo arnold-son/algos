@@ -11,15 +11,17 @@ public class Solution {
     static int bubbleSort(int[] intArray) {
         int numberOfSwaps = 0;
         boolean isSorted = false;
+        int lastUnsorted = intArray.length - 1;
         while (!isSorted) {
             isSorted = true;
-            for (int i = 0; i < intArray.length - 1; i++) {
+            for (int i = 0; i < lastUnsorted; i++) {
                 if (intArray[i] > intArray[i+1]) {
                     swap(intArray, i, i+1);
                     isSorted = false;
                     numberOfSwaps++;
                 }
             }
+            lastUnsorted--;
         }
         return numberOfSwaps;
     }
